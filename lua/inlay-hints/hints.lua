@@ -29,6 +29,7 @@ function M.on_attach(_, bufnr)
   local opts = ih.config.options or {}
 
   vim.api.nvim_create_autocmd({
+    "CursorHold",
     "BufWritePost",
     "BufReadPost",
     "BufEnter",
