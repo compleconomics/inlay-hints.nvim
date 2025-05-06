@@ -8,11 +8,11 @@ local defaults = {
   hints = {
     parameter = {
       show = true,
-      highlight = "Comment",
+      highlight = "InlayHintParameter",
     },
     type = {
       show = true,
-      highlight = "Comment",
+      highlight = "InlayHintType",
     },
   },
 
