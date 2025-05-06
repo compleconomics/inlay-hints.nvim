@@ -27,21 +27,6 @@ function M.render_line(line, line_hints, bufnr, ns)
     end
   end
 
-  -- show parameter hints inside brackets with commas and a thin arrow
-  if not vim.tbl_isempty(param_hints) and parameter_opts.show then
-    local text = ""
-    for i, hint in ipairs(param_hints) do
-      text = text .. hint.label
-      if i ~= #param_hints then
-        text = text .. eol_opts.parameter.separator
-      end
-    end
-    text = eol_opts.parameter.format(text)
-
-    virt_text_str = virt_text_str .. text
-    table.insert(virt_text, { text, parameter_opts.highlight })
-  end
-
   -- show other hints with commas and a thicc arrow
   if not vim.tbl_isempty(type_hints) then
     local text = ""
@@ -56,6 +41,21 @@ function M.render_line(line, line_hints, bufnr, ns)
 
     virt_text_str = virt_text_str .. text
     table.insert(virt_text, { text, type_opts.highlight })
+  end
+
+  -- show parameter hints inside brackets with commas and a thin arrow
+  if not vim.tbl_isempty(param_hints) and parameter_opts.show then
+    local text = ""
+    for i, hint in ipairs(param_hints) do
+      text = text .. hint.label
+      if i ~= #param_hints then
+        text = text .. eol_opts.parameter.separator
+      end
+    end
+    text = eol_opts.parameter.format(text)
+
+    virt_text_str = virt_text_str .. text
+    table.insert(virt_text, { text, parameter_opts.highlight })
   end
 
   local last_virt_text = ""
