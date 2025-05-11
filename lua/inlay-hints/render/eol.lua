@@ -45,17 +45,21 @@ function M.render_line(line, line_hints, bufnr, ns)
 
   -- show parameter hints inside brackets with commas and a thin arrow
   if not vim.tbl_isempty(param_hints) and parameter_opts.show then
-    local text = ""
-    for i, hint in ipairs(param_hints) do
-      text = text .. hint.label
-      if i ~= #param_hints then
-        text = text .. eol_opts.parameter.separator
-      end
-    end
-    text = eol_opts.parameter.format(text)
+    -- try to focus just on multiline function calls [show_everything=false]
+    -- parameter hints are cluttered & imprecise anyways
+    if eol_opts.parameter.show_everything or (#param_hints == 1 and #type_hints == 0) then
+        local text = ""
+        for i, hint in ipairs(param_hints) do
+          text = text .. hint.label
+          if i ~= #param_hints then
+            text = text .. eol_opts.parameter.separator
+          end
+        end
+        text = eol_opts.parameter.format(text)
 
-    virt_text_str = virt_text_str .. text
-    table.insert(virt_text, { text, parameter_opts.highlight })
+        virt_text_str = virt_text_str .. text
+        table.insert(virt_text, { text, parameter_opts.highlight })
+    end
   end
 
   local last_virt_text = ""
